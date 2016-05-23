@@ -3,41 +3,54 @@
 <link rel="import" href="../../iron-flex-layout/iron-flex-layout.html">
 <link rel="import" href="../../neon-animation/neon-animation-runner-behavior.html">
 <link rel="import" href="../rik-from-animation.html">
+<link rel="import" href="../../paper-styles/color.html">
 
 <dom-module id="square-to-circle">
     <template>
-        <style>            
-            .container{
-                position:relative;
-                width:800px;
-                margin:0 auto;
-            }
-            #circle {
-                margin-top:50px;
-                position:absolute;
-                right:100px;
-                top:100px;
+        <style>
+            .container {
+                position: relative;
+                width: 800px;
+                margin: 0 auto;
+                height: 250px;
             }
             
-            #square{
-                position:absolute;
-                left:100px;
+            my-circle {
+                margin-top: 25px;
+                position: absolute;
+                right: 100px;
+                top: 50px;
             }
             
-            .rik-from{
+            my-square {
+                position: absolute;
+                left: 100px;
+            }
+            
+            .rik-from {
                 visibility: hidden;
             }
-            .rik-to{
+            
+            .rik-to {
                 visibility: visible;
             }
             
-            
+            .blue {
+                --my-square-bg-color: var(--paper-blue-600);
+                --my-circle-bg-color: var(--paper-blue-600);
+            }
 
         </style>
         <div class="container">
-            <my-square id="square" on-tap="onTap"></my-square>
+            <my-square id="squareOrange" on-tap="onTapOrange"></my-square>
 
-            <my-circle id="circle" class="rik-from" on-tap="onTap"></my-circle>
+            <my-circle id="circleOrange" class="rik-from" on-tap="onTapOrange"></my-circle>
+        </div>
+        <div class="container">
+            <my-square id="squareBlue" on-tap="onTapBlue" class="blue"></my-square>
+
+            <my-circle id="circleBlue" class="rik-from blue" on-tap="onTapBlue"></my-circle>
+        </div>
         </div>
     </template>
     <script>
@@ -51,24 +64,34 @@
                     type: Object,
                     value: function() {
                         return {
-                            "toggle": {
+                            "toggleOrange": {
+                                key: "orange",
                                 name: "rik-from-animation",
-                                to: this.$.circle,
-                                from: this.$.square,
-                                timing: {
-                                    duration: 500
-                                }
+                                to: this.$.circleOrange,
+                                from: this.$.squareOrange
+                            },
+                            "toggleBlue": {
+                                key: "blue",
+                                name: "rik-from-animation",
+                                to: this.$.circleBlue,
+                                from: this.$.squareBlue
                             }
                         }
                     }
 
                 }
             },
-            onTap: function(e) {
-                this.animationConfig.toggle.from = e.currentTarget;
-                this.animationConfig.toggle.to = this.$.circle===e.currentTarget?this.$.square:this.$.circle;
-                this.playAnimation("toggle");
+            onTapOrange: function(e) {
+                this.animationConfig.toggleOrange.from = e.currentTarget;
+                this.animationConfig.toggleOrange.to = this.$.circleOrange === e.currentTarget ? this.$.squareOrange : this.$.circleOrange;
+                this.playAnimation("toggleOrange");
+            },
+            onTapBlue: function(e) {
+                this.animationConfig.toggleBlue.from = e.currentTarget;
+                this.animationConfig.toggleBlue.to = this.$.circleBlue === e.currentTarget ? this.$.squareBlue : this.$.circleBlue;
+                this.playAnimation("toggleBlue");
             }
+
 
         })
 
