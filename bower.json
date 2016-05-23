@@ -1,0 +1,30 @@
+{
+  "name": "rik-from-animation",
+  "homepage": "https://github.com/rikbrowning/rik-from-animation",
+  "authors": [
+    "r.browning@live.com"
+  ],
+  "description": "Hero animation but without the pages",
+  "main": "index.html",
+  "keywords": [
+    "polymer",
+    "animation"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "polymer": "^1.4.0",
+    "neon-animation": "PolymerElements/neon-animation#^1.2.3"
+  },
+  "devDependencies": {
+    "iron-component-page": "PolymerElements/iron-component-page#^1.1.6",
+    "iron-flex-layout": "PolymerElements/iron-flex-layout#^1.3.1",
+    "paper-styles": "PolymerElements/paper-styles#^1.1.4"
+  }
+}

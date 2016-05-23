@@ -1,0 +1,76 @@
+<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../neon-animation/animations/hero-animation.html">
+<link rel="import" href="../neon-animation/neon-animation-behavior.html">
+<link rel="import" href="../neon-animation/web-animations.html">
+<!--
+@demo  demo/index.html
+-->
+<script>
+    var fromElements = {};
+    Polymer({
+        is: "rik-from-animation",
+        behaviors: [
+            Polymer.NeonAnimationBehavior
+        ],
+        properties: {
+            toClass: {
+                type: String,
+                value: "rik-to"
+            },
+            fromClass: {
+                type: String,
+                value: "rik-from"
+            }
+        },
+        configure: function(config) {
+            
+            if(!config.to || !config.from){
+                console.warn("You must define both to and from properties.");
+            }
+            //create hero animation.
+            this._hero = this._hero || document.createElement("hero-animation");
+            //any elements that are in the from state, please revert
+            this.revertFromElements(config);
+            //clean elements of all states (toClass and fromClass);
+            this.cleanElements(config);
+            //add class here to define state you want element to be in
+            config.to.classList.add(this.toClass);
+            var configure = this._hero.configure.bind(this);
+            //return effect
+            return configure(config);
+        },
+        complete: function(config) {
+            var complete = this._hero.complete.bind(this);
+            complete(config);
+            //once complete add state to from element
+            config.from.classList.add(this.fromClass);
+        },
+        ///Overide the shared elements that the HERO animation uses.
+        findSharedElements: function(config) {
+            if (!config.from || !config.to) {
+                console.warn("need both from and to to be defined");
+                return;
+            }
+            this.sharedElements = {
+                from: config.from,
+                to: config.to
+            };
+            fromElements[config.key || "all"] = config.from;
+
+            return this.sharedElements;
+        },
+        //remove the classes from previous animations
+        revertFromElements: function(config) {
+            var hidden = fromElements[config.key || "all"];
+            if (hidden) {
+                hidden.classList.remove(this.fromClass, this.toClass);
+            }
+        },
+        //Remove classes from the from/to elements
+        cleanElements: function(config) {
+            config.from.classList.remove(this.fromClass, this.toClass);
+            config.to.classList.remove(this.fromClass, this.toClass);
+        }
+    })
+
+</script>
